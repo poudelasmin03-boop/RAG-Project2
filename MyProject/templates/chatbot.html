@@ -1,0 +1,1547 @@
+{% block css %}
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f8fafc;
+    color: #0f172a;
+}
+
+/* =========================================
+   MAIN CHAT CONTAINER
+========================================= */
+
+.chat-container {
+    width: 100%;
+    max-width: 1200px;
+    height: calc(100vh - 40px);
+    margin: 20px auto;
+    display: flex;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.sidebar {
+    width: 300px;
+    background: #f8fafc;
+    border-right: 1px solid #e2e8f0;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+/* =========================================
+   LOGO
+========================================= */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #2563eb;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.logo h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+/* =========================================
+   UPLOAD
+========================================= */
+
+.upload-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #334155;
+}
+
+.upload-form {
+    width: 100%;
+}
+
+.upload-box {
+    display: block;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 25px 15px;
+    text-align: center;
+    background: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.upload-box:hover {
+    border-color: #2563eb;
+    background: #eff6ff;
+}
+
+.upload-icon {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 12px;
+    border-radius: 12px;
+    background: #eff6ff;
+    color: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.upload-box h4 {
+    margin: 5px 0;
+    font-size: 15px;
+    color: #0f172a;
+}
+
+.upload-box p {
+    margin: 5px 0 15px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #64748b;
+}
+
+.upload-button {
+    display: inline-block;
+    padding: 9px 16px;
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.upload-button:hover {
+    background: #1d4ed8;
+}
+
+#pdf_file {
+    display: none;
+}
+
+.upload-submit {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* =========================================
+   FILE INFORMATION
+========================================= */
+
+.file-info {
+    margin-top: 15px;
+    padding: 12px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    font-size: 13px;
+    color: #334155;
+}
+
+.file-name {
+    font-weight: 600;
+    word-break: break-word;
+    color: #334155;
+}
+
+.pdf-status {
+    margin-top: 5px;
+    color: #10b981;
+    font-size: 12px;
+}
+
+/* =========================================
+   SIDEBAR BOTTOM
+========================================= */
+
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+/* =========================================
+   CHAT AREA
+========================================= */
+
+.chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: #ffffff;
+}
+
+/* =========================================
+   CHAT HEADER
+========================================= */
+
+.chat-header {
+    height: 70px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+.chat-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.bot-avatar {
+    width: 42px;
+    height: 42px;
+    background: #2563eb;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.chat-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.online {
+    font-size: 12px;
+    color: #10b981;
+    margin-top: 3px;
+}
+
+/* =========================================
+   CLEAR BUTTON
+========================================= */
+
+.clear-button {
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    padding: 8px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    color: #475569;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.clear-button:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #0f172a;
+}
+
+/* =========================================
+   CHAT MESSAGES
+========================================= */
+
+.chat-messages {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+    background: #ffffff;
+    scroll-behavior: smooth;
+}
+
+.message {
+    display: flex;
+    margin-bottom: 22px;
+    max-width: 80%;
+}
+
+.message.bot {
+    align-items: flex-start;
+}
+
+.message.user {
+    margin-left: auto;
+    justify-content: flex-end;
+}
+
+.message-avatar {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 50%;
+    background: #2563eb;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.message.user .message-avatar {
+    order: 2;
+    margin-left: 10px;
+    margin-right: 0;
+    background: #0f172a;
+}
+
+.message-content {
+    padding: 12px 15px;
+    border-radius: 12px;
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 14px;
+    line-height: 1.6;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.message.user .message-content {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+/* =========================================
+   LOADING
+========================================= */
+
+.loading-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.loading-dot {
+    width: 7px;
+    height: 7px;
+    background: #64748b;
+    border-radius: 50%;
+    animation: loading 1.2s infinite;
+}
+
+.loading-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes loading {
+    0%,
+    60%,
+    100% {
+        opacity: 0.3;
+        transform: translateY(0);
+    }
+
+    30% {
+        opacity: 1;
+        transform: translateY(-3px);
+    }
+}
+
+/* =========================================
+   CHAT INPUT
+========================================= */
+
+.chat-input-area {
+    padding: 18px 25px;
+    border-top: 1px solid #e2e8f0;
+    background: #ffffff;
+    flex-shrink: 0;
+}
+
+.chat-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 7px;
+    background: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.chat-form:focus-within {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.attach-button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.attach-button:hover {
+    color: #2563eb;
+    background: #eff6ff;
+}
+
+.chat-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    padding: 10px;
+    color: #0f172a;
+    background: transparent;
+}
+
+.chat-input::placeholder {
+    color: #94a3b8;
+}
+
+.send-button {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 9px;
+    background: #2563eb;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.send-button:hover {
+    background: #1d4ed8;
+}
+
+.send-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.input-note {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: #f8fafc;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .chat-container {
+        margin: 10px;
+        width: calc(100% - 20px);
+        height: calc(100vh - 20px);
+    }
+
+    .sidebar {
+        width: 260px;
+    }
+
+    .message {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .chat-container {
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        border: none;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .chat-header {
+        padding: 0 15px;
+    }
+
+    .chat-messages {
+        padding: 18px;
+    }
+
+    .chat-input-area {
+        padding: 12px;
+    }
+
+    .message {
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .chat-header h3 {
+        font-size: 14px;
+    }
+
+    .bot-avatar {
+        width: 38px;
+        height: 38px;
+    }
+
+    .clear-button {
+        padding: 7px 10px;
+    }
+
+    .message-content {
+        font-size: 13px;
+    }
+}
+
+</style>
+
+{% endblock %}
+
+
+<div class="chat-container">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                AI
+            </div>
+
+            <h2>PDF Chat</h2>
+
+        </div>
+
+
+        <div class="upload-title">
+            Upload your PDF
+        </div>
+
+
+        <!-- PDF UPLOAD -->
+
+        <form
+            class="upload-form"
+            method="POST"
+            enctype="multipart/form-data"
+            action="{% url 'upload_pdf' %}"
+            id="upload-form"
+        >
+
+            {% csrf_token %}
+
+            <label
+                class="upload-box"
+                for="pdf_file"
+            >
+
+                <div class="upload-icon">
+                    PDF
+                </div>
+
+                <h4>
+                    Upload a document
+                </h4>
+
+                <p>
+                    Drag and drop your PDF here
+                    <br>
+                    or choose a file
+                </p>
+
+                <span class="upload-button">
+                    Choose PDF
+                </span>
+
+            </label>
+
+
+            <input
+                type="file"
+                id="pdf_file"
+                name="pdf_file"
+                accept=".pdf"
+            >
+
+
+            <button
+                type="submit"
+                class="upload-button upload-submit"
+                id="upload-submit"
+            >
+                Upload PDF
+            </button>
+
+        </form>
+
+
+        <div class="file-info">
+
+            <div
+                class="file-name"
+                id="file-name"
+            >
+                No PDF selected
+            </div>
+
+            <div
+                class="pdf-status"
+                id="pdf-status"
+            >
+                Select a PDF to upload
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            Upload a PDF and ask questions about
+            its contents using the AI assistant.
+
+        </div>
+
+    </aside>
+
+
+    <!-- CHAT AREA -->
+
+    <main class="chat-area">
+
+
+        <!-- HEADER -->
+
+        <header class="chat-header">
+
+            <div class="chat-header-left">
+
+                <div class="bot-avatar">
+                    AI
+                </div>
+
+                <div>
+
+                    <h3>
+                        PDF Assistant
+                    </h3>
+
+                    <div class="online">
+                        AI Assistant
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="clear-button"
+                type="button"
+                id="clear-chat"
+            >
+                Clear
+            </button>
+
+        </header>
+
+
+        <!-- MESSAGES -->
+
+        <section
+            class="chat-messages"
+            id="chat-messages"
+        >
+
+            <div class="message bot">
+
+                <div class="message-avatar">
+                    AI
+                </div>
+
+                <div class="message-content">
+                    Hello! Upload a PDF and ask me questions
+                    about the document.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- INPUT -->
+
+        <div class="chat-input-area">
+
+            <form
+                class="chat-form"
+                method="POST"
+                action="{% url 'chatbot_message' %}"
+                id="chat-form"
+            >
+
+                {% csrf_token %}
+
+
+                <button
+                    type="button"
+                    class="attach-button"
+                    id="attach-button"
+                    title="Upload PDF"
+                >
+                    +
+                </button>
+
+
+                <input
+                    type="text"
+                    name="message"
+                    class="chat-input"
+                    id="chat-input"
+                    placeholder="Ask something about your PDF..."
+                    autocomplete="off"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="send-button"
+                    id="send-button"
+                    title="Send"
+                >
+                    →
+                </button>
+
+            </form>
+
+
+            <div class="input-note">
+                Answers are generated from the uploaded document.
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =========================================
+       GET ELEMENTS
+    ========================================= */
+
+    const chatForm =
+        document.getElementById("chat-form");
+
+    const chatInput =
+        document.getElementById("chat-input");
+
+    const chatMessages =
+        document.getElementById("chat-messages");
+
+    const sendButton =
+        document.getElementById("send-button");
+
+    const clearButton =
+        document.getElementById("clear-chat");
+
+    const pdfFile =
+        document.getElementById("pdf_file");
+
+    const fileName =
+        document.getElementById("file-name");
+
+    const pdfStatus =
+        document.getElementById("pdf-status");
+
+    const uploadForm =
+        document.getElementById("upload-form");
+
+    const uploadSubmit =
+        document.getElementById("upload-submit");
+
+    const attachButton =
+        document.getElementById("attach-button");
+
+
+    /* =========================================
+       CHECK CHAT ELEMENTS
+    ========================================= */
+
+    if (
+        !chatForm ||
+        !chatInput ||
+        !chatMessages ||
+        !sendButton
+    ) {
+
+        console.error(
+            "Chat elements were not found."
+        );
+
+        return;
+    }
+
+
+    /* =========================================
+       PDF FILE SELECTED
+    ========================================= */
+
+    if (pdfFile) {
+
+        pdfFile.addEventListener(
+            "change",
+            function () {
+
+                if (pdfFile.files.length > 0) {
+
+                    const file =
+                        pdfFile.files[0];
+
+                    fileName.textContent =
+                        file.name;
+
+                    pdfStatus.textContent =
+                        "Ready for upload.";
+
+                } else {
+
+                    fileName.textContent =
+                        "No PDF selected";
+
+                    pdfStatus.textContent =
+                        "Select a PDF to upload.";
+                }
+
+            }
+        );
+    }
+
+
+    /* =========================================
+       PDF UPLOAD
+    ========================================= */
+
+    if (uploadForm) {
+
+        uploadForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                if (
+                    !pdfFile ||
+                    pdfFile.files.length === 0
+                ) {
+
+                    pdfStatus.textContent =
+                        "Please select a PDF first.";
+
+                    return;
+                }
+
+
+                const formData =
+                    new FormData(uploadForm);
+
+
+                uploadSubmit.disabled = true;
+
+                uploadSubmit.textContent =
+                    "Uploading...";
+
+                pdfStatus.textContent =
+                    "Creating database...";
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "{% url 'upload_pdf' %}",
+                            {
+                                method: "POST",
+                                body: formData
+                            }
+                        );
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            "Upload failed. Status: " +
+                            response.status
+                        );
+
+                    }
+
+
+                    const data =
+                        await response.json();
+
+
+                    console.log(
+                        "PDF upload response:",
+                        data
+                    );
+
+
+                    if (data.success) {
+
+                        pdfStatus.textContent =
+                            "PDF uploaded successfully.";
+
+                    } else {
+
+                        pdfStatus.textContent =
+                            data.message ||
+                            "PDF upload failed.";
+                    }
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "PDF upload error:",
+                        error
+                    );
+
+                    pdfStatus.textContent =
+                        "PDF upload failed.";
+                }
+
+
+                finally {
+
+                    uploadSubmit.disabled =
+                        false;
+
+                    uploadSubmit.textContent =
+                        "Upload PDF";
+                }
+
+            }
+        );
+    }
+
+
+    /* =========================================
+       ATTACH BUTTON
+    ========================================= */
+
+    if (attachButton && pdfFile) {
+
+        attachButton.addEventListener(
+            "click",
+            function () {
+
+                pdfFile.click();
+
+            }
+        );
+    }
+
+
+    /* =========================================
+       CHAT SUBMIT
+    ========================================= */
+
+    chatForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            /* =========================================
+               GET USER INPUT
+            ========================================= */
+
+            const userMessage =
+                chatInput.value.trim();
+
+
+            console.log(
+                "Message typed:",
+                userMessage
+            );
+
+
+            if (!userMessage) {
+
+                console.log(
+                    "Empty message."
+                );
+
+                return;
+            }
+
+
+            /* =========================================
+               IMPORTANT FIX
+               
+               Create FormData BEFORE clearing
+               the input field.
+            ========================================= */
+
+            const formData =
+                new FormData();
+
+
+            formData.append(
+                "message",
+                userMessage
+            );
+
+
+            console.log(
+                "Message being sent:",
+                formData.get("message")
+            );
+
+
+            /* =========================================
+               ADD CSRF TOKEN
+            ========================================= */
+
+            const csrfToken =
+                chatForm.querySelector(
+                    "[name=csrfmiddlewaretoken]"
+                );
+
+
+            if (csrfToken) {
+
+                formData.append(
+                    "csrfmiddlewaretoken",
+                    csrfToken.value
+                );
+            }
+
+
+            /* =========================================
+               SHOW USER MESSAGE
+            ========================================= */
+
+            const userMessageDiv =
+                document.createElement("div");
+
+            userMessageDiv.className =
+                "message user";
+
+
+            const userContent =
+                document.createElement("div");
+
+            userContent.className =
+                "message-content";
+
+            userContent.textContent =
+                userMessage;
+
+
+            const userAvatar =
+                document.createElement("div");
+
+            userAvatar.className =
+                "message-avatar";
+
+            userAvatar.textContent =
+                "You";
+
+
+            userMessageDiv.appendChild(
+                userContent
+            );
+
+            userMessageDiv.appendChild(
+                userAvatar
+            );
+
+
+            chatMessages.appendChild(
+                userMessageDiv
+            );
+
+
+            /* =========================================
+               CLEAR INPUT
+               
+               Now it is safe to clear because
+               FormData already contains the message.
+            ========================================= */
+
+            chatInput.value = "";
+
+
+            /* =========================================
+               SCROLL
+            ========================================= */
+
+            chatMessages.scrollTop =
+                chatMessages.scrollHeight;
+
+
+            /* =========================================
+               DISABLE BUTTON
+            ========================================= */
+
+            sendButton.disabled = true;
+
+
+            /* =========================================
+               LOADING MESSAGE
+            ========================================= */
+
+            const loadingMessage =
+                document.createElement("div");
+
+            loadingMessage.className =
+                "message bot";
+
+            loadingMessage.id =
+                "loading-message";
+
+
+            const loadingAvatar =
+                document.createElement("div");
+
+            loadingAvatar.className =
+                "message-avatar";
+
+            loadingAvatar.textContent =
+                "AI";
+
+
+            const loadingContent =
+                document.createElement("div");
+
+            loadingContent.className =
+                "message-content";
+
+
+            const loadingContainer =
+                document.createElement("div");
+
+            loadingContainer.className =
+                "loading-message";
+
+
+            for (
+                let i = 0;
+                i < 3;
+                i++
+            ) {
+
+                const dot =
+                    document.createElement("div");
+
+                dot.className =
+                    "loading-dot";
+
+                loadingContainer.appendChild(
+                    dot
+                );
+            }
+
+
+            loadingContent.appendChild(
+                loadingContainer
+            );
+
+
+            loadingMessage.appendChild(
+                loadingAvatar
+            );
+
+            loadingMessage.appendChild(
+                loadingContent
+            );
+
+
+            chatMessages.appendChild(
+                loadingMessage
+            );
+
+
+            chatMessages.scrollTop =
+                chatMessages.scrollHeight;
+
+
+            /* =========================================
+               SEND TO DJANGO
+            ========================================= */
+
+            try {
+
+                const response =
+                    await fetch(
+                        "{% url 'chatbot_message' %}",
+                        {
+                            method: "POST",
+                            body: formData
+                        }
+                    );
+
+
+                /* =========================================
+                   CHECK RESPONSE
+                ========================================= */
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Server error: " +
+                        response.status
+                    );
+                }
+
+
+                /* =========================================
+                   GET JSON
+                ========================================= */
+
+                const data =
+                    await response.json();
+
+
+                console.log(
+                    "Django response:",
+                    data
+                );
+
+
+                /* =========================================
+                   REMOVE LOADING
+                ========================================= */
+
+                const loading =
+                    document.getElementById(
+                        "loading-message"
+                    );
+
+
+                if (loading) {
+
+                    loading.remove();
+
+                }
+
+
+                /* =========================================
+                   CREATE BOT MESSAGE
+                ========================================= */
+
+                const botMessageDiv =
+                    document.createElement("div");
+
+                botMessageDiv.className =
+                    "message bot";
+
+
+                const botAvatar =
+                    document.createElement("div");
+
+                botAvatar.className =
+                    "message-avatar";
+
+                botAvatar.textContent =
+                    "AI";
+
+
+                const botContent =
+                    document.createElement("div");
+
+                botContent.className =
+                    "message-content";
+
+
+                if (data.success) {
+
+                    botContent.textContent =
+                        data.message;
+
+                } else {
+
+                    botContent.textContent =
+                        data.message ||
+                        "Something went wrong.";
+                }
+
+
+                botMessageDiv.appendChild(
+                    botAvatar
+                );
+
+                botMessageDiv.appendChild(
+                    botContent
+                );
+
+
+                chatMessages.appendChild(
+                    botMessageDiv
+                );
+
+
+                /* =========================================
+                   SCROLL
+                ========================================= */
+
+                chatMessages.scrollTop =
+                    chatMessages.scrollHeight;
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "Chat error:",
+                    error
+                );
+
+
+                /* =========================================
+                   REMOVE LOADING
+                ========================================= */
+
+                const loading =
+                    document.getElementById(
+                        "loading-message"
+                    );
+
+
+                if (loading) {
+
+                    loading.remove();
+
+                }
+
+
+                /* =========================================
+                   ERROR MESSAGE
+                ========================================= */
+
+                const errorMessageDiv =
+                    document.createElement("div");
+
+                errorMessageDiv.className =
+                    "message bot";
+
+
+                const errorAvatar =
+                    document.createElement("div");
+
+                errorAvatar.className =
+                    "message-avatar";
+
+                errorAvatar.textContent =
+                    "AI";
+
+
+                const errorContent =
+                    document.createElement("div");
+
+                errorContent.className =
+                    "message-content";
+
+                errorContent.textContent =
+                    "Something went wrong. Please try again.";
+
+
+                errorMessageDiv.appendChild(
+                    errorAvatar
+                );
+
+                errorMessageDiv.appendChild(
+                    errorContent
+                );
+
+
+                chatMessages.appendChild(
+                    errorMessageDiv
+                );
+
+
+                chatMessages.scrollTop =
+                    chatMessages.scrollHeight;
+
+            }
+
+
+            finally {
+
+                sendButton.disabled =
+                    false;
+
+                chatInput.focus();
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       CLEAR CHAT
+    ========================================= */
+
+    if (clearButton) {
+
+        clearButton.addEventListener(
+            "click",
+            function () {
+
+                chatMessages.innerHTML = "";
+
+
+                const welcomeMessage =
+                    document.createElement("div");
+
+                welcomeMessage.className =
+                    "message bot";
+
+
+                const avatar =
+                    document.createElement("div");
+
+                avatar.className =
+                    "message-avatar";
+
+                avatar.textContent =
+                    "AI";
+
+
+                const content =
+                    document.createElement("div");
+
+                content.className =
+                    "message-content";
+
+                content.textContent =
+                    "Hello! Upload a PDF and ask me questions about the document.";
+
+
+                welcomeMessage.appendChild(
+                    avatar
+                );
+
+                welcomeMessage.appendChild(
+                    content
+                );
+
+
+                chatMessages.appendChild(
+                    welcomeMessage
+                );
+
+            }
+        );
+    }
+
+
+    /* =========================================
+       ENTER KEY
+    ========================================= */
+
+    chatInput.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+                chatForm.requestSubmit();
+
+            }
+
+        }
+    );
+
+});
+
+</script>
